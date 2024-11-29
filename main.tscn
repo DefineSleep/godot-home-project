@@ -1,9 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://noexklswb0ye"]
+[gd_scene load_steps=4 format=3 uid="uid://noexklswb0ye"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_36i56"]
-
-[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_jtnmf"]
-file = "anime_girl.ogg"
+[ext_resource type="VideoStream" path="res://green_deadsec_color_glitch.ogv" id="2_aavlr"]
+[ext_resource type="Texture2D" uid="uid://bwu8m1n1hw3oe" path="res://wallpaper_images/dedsec_wallpaper2.jpg" id="2_okoxw"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -19,14 +18,25 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 1920.0
+offset_right = 1728.0
 offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-stream = SubResource("VideoStreamTheora_jtnmf")
+scale = Vector2(0.53, 0.53)
+stream = ExtResource("2_aavlr")
 autoplay = true
 loop = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_okoxw")
+expand_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -113,9 +123,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03125
-anchor_top = 0.507716
-anchor_right = 0.28066
-anchor_bottom = 0.937
+anchor_top = 0.507407
+anchor_right = 0.280896
+anchor_bottom = 0.785348
 offset_right = -0.32
 offset_bottom = -0.176003
 metadata/_edit_use_anchors_ = true
@@ -126,15 +136,35 @@ layout_mode = 2
 [node name="title" type="Label" parent="shortcuts_panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "ShortCuts"
+text = "Web ShortCuts"
 
 [node name="HSeparator" type="HSeparator" parent="shortcuts_panel/VBoxContainer"]
 layout_mode = 2
+
+[node name="shortcut_button_7" type="Button" parent="shortcuts_panel/VBoxContainer"]
+layout_mode = 2
+text = "Amazon"
+
+[node name="shortcut_button_6" type="Button" parent="shortcuts_panel/VBoxContainer"]
+layout_mode = 2
+text = "ChatGPT"
+
+[node name="shortcut_button_5" type="Button" parent="shortcuts_panel/VBoxContainer"]
+layout_mode = 2
+text = "Instagram"
 
 [node name="shortcut_button_1" type="Button" parent="shortcuts_panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 text = "Godot Docs"
+
+[node name="shortcut_button_4" type="Button" parent="shortcuts_panel/VBoxContainer"]
+layout_mode = 2
+text = "Reddit"
+
+[node name="shortcut_button_3" type="Button" parent="shortcuts_panel/VBoxContainer"]
+layout_mode = 2
+text = "Spotify"
 
 [node name="shortcut_button_2" type="Button" parent="shortcuts_panel/VBoxContainer"]
 layout_mode = 2
@@ -193,13 +223,25 @@ metadata/_edit_use_anchors_ = true
 [node name="exit_button" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.976563
+anchor_left = 0.963542
 anchor_top = 0.00740741
-anchor_right = 0.995958
+anchor_right = 0.982938
 anchor_bottom = 0.0358148
 offset_right = -0.23999
 offset_bottom = 0.319996
 text = "Exit"
+metadata/_edit_use_anchors_ = true
+
+[node name="settings_button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.916667
+anchor_top = 0.00740741
+anchor_right = 0.948958
+anchor_bottom = 0.0287037
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Settings"
 metadata/_edit_use_anchors_ = true
 
 [node name="update_timer" type="Timer" parent="."]
@@ -218,10 +260,24 @@ offset_bottom = 6.8
 text = "TEST DATE"
 metadata/_edit_use_anchors_ = true
 
+[node name="incremental_timer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
+[node name="money_timer" type="Label" parent="incremental_timer"]
+offset_left = 1472.0
+offset_top = 784.0
+offset_right = 1741.0
+offset_bottom = 949.0
+theme_override_font_sizes/font_size = 120
+text = "Money"
+
 [connection signal="toggled" from="standing_counter_container/HBoxContainer/standing_counter_button" to="." method="_on_standing_counter_button_toggled"]
 [connection signal="pressed" from="standing_counter_container/HBoxContainer/reset_button" to="." method="_on_reset_button_pressed"]
 [connection signal="toggled" from="standing_counter_container/HBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="pressed" from="shortcuts_panel/VBoxContainer/shortcut_button_1" to="." method="_on_shortcut_button_1_pressed"]
 [connection signal="pressed" from="shortcuts_panel/VBoxContainer/shortcut_button_2" to="." method="_on_shortcut_button_2_pressed"]
 [connection signal="pressed" from="exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="settings_button" to="." method="_on_settings_button_pressed"]
 [connection signal="timeout" from="update_timer" to="." method="_on_update_timer_timeout"]
+[connection signal="timeout" from="incremental_timer" to="." method="_on_incremental_timer_timeout"]

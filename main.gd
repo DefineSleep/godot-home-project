@@ -22,10 +22,14 @@ extends Control
 
 @onready var date_label: Label = $date_label
 
+@onready var incremental_timer: Timer = $incremental_timer
+
+@onready var money_timer: Label = $incremental_timer/money_timer
+
 
 # save system 
-var game_data = {
-	
+var game_data : Dictionary = {
+	"money" : 0,
 	
 }
 
@@ -59,6 +63,8 @@ func _process(delta: float) -> void:
 
 	current_task.text = print_schedule(Time.get_datetime_dict_from_system(false).hour)
 	update_time_date()
+	money_timer.text = str(game_data.money)
+
 	
 # --------------------------------
 
@@ -73,11 +79,12 @@ func test_function():
 
 # --------------------------------
 
+		
 
 func update_time_date():
-	var current_time = Time.get_datetime_dict_from_system()
+	var current_time : Dictionary = Time.get_datetime_dict_from_system()
 	date_label.text = weekday_setter(current_time.weekday)
-	print(weekday_setter(current_time.weekday))
+	#print(weekday_setter(current_time.weekday))
 	
 	pass
 	
@@ -164,13 +171,34 @@ func _on_update_timer_timeout() -> void:
 # ------
 
 
+
 func data_save():
 	pass
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 func data_load():
 	pass
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -231,3 +259,12 @@ func print_schedule(_time): # tie to a timer of 60 seconds
 	
 	return current_task
 	
+
+
+func _on_settings_button_pressed() -> void: # TODO : SETTINGS PAGE OPEN?
+	pass 
+
+
+func _on_incremental_timer_timeout() -> void: # INCREMENTAL SYSTEM , MONEY  ++ 
+	game_data.money +=1
+	data_save()
