@@ -1,71 +1,97 @@
-[gd_scene load_steps=4 format=3 uid="uid://noexklswb0ye"]
+[gd_scene load_steps=11 format=3 uid="uid://noexklswb0ye"]
 
+[ext_resource type="Theme" uid="uid://c4guut8daundx" path="res://theme_1.tres" id="1_0hxo5"]
 [ext_resource type="Script" path="res://main.gd" id="1_36i56"]
-[ext_resource type="VideoStream" path="res://green_deadsec_color_glitch.ogv" id="2_aavlr"]
-[ext_resource type="Texture2D" uid="uid://bwu8m1n1hw3oe" path="res://wallpaper_images/dedsec_wallpaper2.jpg" id="2_okoxw"]
+[ext_resource type="Texture2D" uid="uid://dvo572mirc85h" path="res://assets/btn4-hovered.png" id="4_0fl8n"]
+[ext_resource type="Script" path="res://panel_container.gd" id="4_npi78"]
+[ext_resource type="Script" path="res://curent_task_container.gd" id="5_rlnkj"]
+[ext_resource type="Script" path="res://standing_counter_container.gd" id="6_gqklx"]
+[ext_resource type="Script" path="res://shortcuts_panel.gd" id="7_hj0yl"]
+[ext_resource type="Script" path="res://other_panel.gd" id="8_5dj38"]
+[ext_resource type="Texture2D" uid="uid://bs58cerk8dixo" path="res://assets/missions menu (frame-up).png" id="9_o0lls"]
+[ext_resource type="Texture2D" uid="uid://wcyqnwy21rhv" path="res://assets/missions menu (frame-down).png" id="10_m534g"]
 
 [node name="main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_0hxo5")
 script = ExtResource("1_36i56")
-
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1728.0
-offset_bottom = 1080.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.53, 0.53)
-stream = ExtResource("2_aavlr")
-autoplay = true
-loop = true
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_okoxw")
-expand_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0333333
-anchor_top = 0.0592593
-anchor_right = 0.302618
-anchor_bottom = 0.207246
-offset_right = -0.216003
-offset_bottom = 0.103989
+anchor_left = 0.328125
+anchor_top = 0.192593
+anchor_right = 0.59741
+anchor_bottom = 0.377681
+offset_left = 144.0
+offset_right = 126.974
+offset_bottom = 0.104004
+pivot_offset = Vector2(250, 0)
+script = ExtResource("4_npi78")
 metadata/_edit_use_anchors_ = true
 
-[node name="time_label" type="Label" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="time_label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "TIME "
 horizontal_alignment = 1
+
+[node name="date_label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "TEST DATE"
+metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer"]
+layout_mode = 2
+texture = ExtResource("4_0fl8n")
+region_rect = Rect2(16, 16, 416, 104)
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 50
 
 [node name="curent_task_container" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.710222
-anchor_top = 0.0465062
-anchor_right = 0.963972
-anchor_bottom = 0.213444
+anchor_left = 0.691758
+anchor_top = 0.785311
+anchor_right = 0.945508
+anchor_bottom = 0.952249
 offset_left = -0.176025
 offset_top = -0.136002
 offset_right = -0.496094
 offset_bottom = -0.312004
+script = ExtResource("5_rlnkj")
 metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="curent_task_container"]
+layout_mode = 2
+texture = ExtResource("4_0fl8n")
+region_rect = Rect2(16, 16, 416, 104)
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 50
 
 [node name="current_task" type="Label" parent="curent_task_container"]
 layout_mode = 2
@@ -75,21 +101,31 @@ horizontal_alignment = 1
 [node name="standing_counter_container" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0333333
-anchor_top = 0.340741
-anchor_right = 0.349125
-anchor_bottom = 0.384423
+anchor_left = 0.408333
+anchor_top = 0.414815
+anchor_right = 0.724125
+anchor_bottom = 0.458497
 offset_right = -0.32
 offset_bottom = -0.176003
+script = ExtResource("6_gqklx")
 metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="standing_counter_container"]
+layout_mode = 2
+texture = ExtResource("4_0fl8n")
+region_rect = Rect2(16, 16, 416, 104)
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 50
 
 [node name="HBoxContainer" type="HBoxContainer" parent="standing_counter_container"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="standing_counter_container/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = " Time Standing"
+size_flags_horizontal = 6
+text = "Timer"
 
 [node name="VSeparator" type="VSeparator" parent="standing_counter_container/HBoxContainer"]
 layout_mode = 2
@@ -123,99 +159,97 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03125
-anchor_top = 0.507407
+anchor_top = 0.666667
 anchor_right = 0.280896
-anchor_bottom = 0.785348
+anchor_bottom = 0.944608
 offset_right = -0.32
 offset_bottom = -0.176003
+script = ExtResource("7_hj0yl")
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="shortcuts_panel"]
+[node name="NinePatchRect" type="NinePatchRect" parent="shortcuts_panel"]
+layout_mode = 2
+texture = ExtResource("4_0fl8n")
+region_rect = Rect2(16, 16, 416, 104)
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 50
+
+[node name="MarginContainer" type="MarginContainer" parent="shortcuts_panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="shortcuts_panel/MarginContainer"]
 layout_mode = 2
 
-[node name="title" type="Label" parent="shortcuts_panel/VBoxContainer"]
+[node name="title" type="Label" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Web ShortCuts"
 
-[node name="HSeparator" type="HSeparator" parent="shortcuts_panel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="shortcut_button_7" type="Button" parent="shortcuts_panel/VBoxContainer"]
+[node name="shortcut_button_7" type="Button" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Amazon"
 
-[node name="shortcut_button_6" type="Button" parent="shortcuts_panel/VBoxContainer"]
+[node name="shortcut_button_6" type="Button" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "ChatGPT"
 
-[node name="shortcut_button_5" type="Button" parent="shortcuts_panel/VBoxContainer"]
+[node name="shortcut_button_5" type="Button" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Instagram"
 
-[node name="shortcut_button_1" type="Button" parent="shortcuts_panel/VBoxContainer"]
+[node name="shortcut_button_1" type="Button" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 text = "Godot Docs"
 
-[node name="shortcut_button_4" type="Button" parent="shortcuts_panel/VBoxContainer"]
+[node name="shortcut_button_4" type="Button" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Reddit"
 
-[node name="shortcut_button_3" type="Button" parent="shortcuts_panel/VBoxContainer"]
+[node name="shortcut_button_3" type="Button" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Spotify"
 
-[node name="shortcut_button_2" type="Button" parent="shortcuts_panel/VBoxContainer"]
+[node name="shortcut_button_2" type="Button" parent="shortcuts_panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 text = "Youtube"
 
-[node name="PanelContainer2" type="PanelContainer" parent="."]
+[node name="other_panel" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.740625
+anchor_left = 0.683333
 anchor_top = 0.272222
 anchor_right = 0.944958
-anchor_bottom = 0.41663
+anchor_bottom = 0.355519
 offset_right = -0.320004
 offset_bottom = 0.0400009
+script = ExtResource("8_5dj38")
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="other_panel"]
 layout_mode = 2
 
-[node name="physical_mem" type="Label" parent="PanelContainer2/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="other_panel"]
 layout_mode = 2
-
-[node name="free_mem" type="Label" parent="PanelContainer2/VBoxContainer"]
-layout_mode = 2
-
-[node name="available_mem" type="Label" parent="PanelContainer2/VBoxContainer"]
-layout_mode = 2
-
-[node name="stack_meme" type="Label" parent="PanelContainer2/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.016
-anchor_top = 0.009
-anchor_right = 0.369
-anchor_bottom = 0.046
-offset_left = -0.720001
-offset_top = 0.28
-offset_right = 0.519958
-offset_bottom = 0.319996
 metadata/_edit_use_anchors_ = true
 
-[node name="processor_name" type="Label" parent="HBoxContainer"]
+[node name="processor_name" type="Label" parent="other_panel/HBoxContainer"]
 layout_mode = 2
 text = "TEST NAME"
 metadata/_edit_use_anchors_ = true
 
-[node name="processor_cores" type="Label" parent="HBoxContainer"]
+[node name="processor_cores" type="Label" parent="other_panel/HBoxContainer"]
 layout_mode = 2
 text = "TEST CORES"
 metadata/_edit_use_anchors_ = true
@@ -248,36 +282,24 @@ metadata/_edit_use_anchors_ = true
 wait_time = 2.0
 autostart = true
 
-[node name="date_label" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0375
-anchor_top = 0.0666667
-anchor_right = 0.171167
-anchor_bottom = 0.0974074
-offset_right = 7.36
-offset_bottom = 6.8
-text = "TEST DATE"
-metadata/_edit_use_anchors_ = true
+[node name="MissionsMenu(frame-up)" type="Sprite2D" parent="."]
+position = Vector2(960, 1028)
+texture = ExtResource("9_o0lls")
 
-[node name="incremental_timer" type="Timer" parent="."]
-wait_time = 60.0
-autostart = true
-
-[node name="money_timer" type="Label" parent="incremental_timer"]
-offset_left = 1472.0
-offset_top = 784.0
-offset_right = 1741.0
-offset_bottom = 949.0
-theme_override_font_sizes/font_size = 120
-text = "Money"
+[node name="MissionsMenu(frame-down)" type="Sprite2D" parent="."]
+position = Vector2(960, 48)
+texture = ExtResource("10_m534g")
 
 [connection signal="toggled" from="standing_counter_container/HBoxContainer/standing_counter_button" to="." method="_on_standing_counter_button_toggled"]
 [connection signal="pressed" from="standing_counter_container/HBoxContainer/reset_button" to="." method="_on_reset_button_pressed"]
 [connection signal="toggled" from="standing_counter_container/HBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
-[connection signal="pressed" from="shortcuts_panel/VBoxContainer/shortcut_button_1" to="." method="_on_shortcut_button_1_pressed"]
-[connection signal="pressed" from="shortcuts_panel/VBoxContainer/shortcut_button_2" to="." method="_on_shortcut_button_2_pressed"]
+[connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_7" to="." method="_on_shortcut_button_7_pressed"]
+[connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_6" to="." method="_on_shortcut_button_6_pressed"]
+[connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_5" to="." method="_on_shortcut_button_5_pressed"]
+[connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_1" to="." method="_on_shortcut_button_1_pressed"]
+[connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_4" to="." method="_on_shortcut_button_4_pressed"]
+[connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_3" to="." method="_on_shortcut_button_3_pressed"]
+[connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_2" to="." method="_on_shortcut_button_2_pressed"]
 [connection signal="pressed" from="exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="settings_button" to="." method="_on_settings_button_pressed"]
 [connection signal="timeout" from="update_timer" to="." method="_on_update_timer_timeout"]
-[connection signal="timeout" from="incremental_timer" to="." method="_on_incremental_timer_timeout"]

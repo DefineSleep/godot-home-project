@@ -1,30 +1,123 @@
 extends Control
 
 
-
-@onready var time_label: Label = $PanelContainer/time_label
-
-
-@onready var standing_counter_text: Label = $standing_counter_container/HBoxContainer/standing_counter_text
-@onready var standing_counter_button: CheckButton = $standing_counter_container/HBoxContainer/standing_counter_button
-
-# memory usage
-@onready var physical_mem: Label = $PanelContainer2/VBoxContainer/physical_mem
-@onready var free_mem: Label = $PanelContainer2/VBoxContainer/free_mem
-@onready var available_mem: Label = $PanelContainer2/VBoxContainer/available_mem
-@onready var stack_meme: Label = $PanelContainer2/VBoxContainer/stack_meme
-
-
-@onready var processor_name: Label = $HBoxContainer/processor_name
-@onready var processor_cores: Label = $HBoxContainer/processor_cores
-
+@onready var main: Control = $"."
+@onready var video_stream_player: VideoStreamPlayer = $VideoStreamPlayer
+@onready var texture_rect: TextureRect = $TextureRect
+@onready var panel_container: PanelContainer = $PanelContainer
+@onready var curent_task_container: PanelContainer = $curent_task_container
 @onready var current_task: Label = $curent_task_container/current_task
+@onready var standing_counter_container: PanelContainer = $standing_counter_container
+@onready var h_box_container: HBoxContainer = $standing_counter_container/HBoxContainer
+@onready var label: Label = $standing_counter_container/HBoxContainer/Label
+@onready var v_separator: VSeparator = $standing_counter_container/HBoxContainer/VSeparator
+@onready var standing_counter_text: Label = $standing_counter_container/HBoxContainer/standing_counter_text
+@onready var v_separator_2: VSeparator = $standing_counter_container/HBoxContainer/VSeparator2
+@onready var standing_counter_button: CheckButton = $standing_counter_container/HBoxContainer/standing_counter_button
+@onready var v_separator_3: VSeparator = $standing_counter_container/HBoxContainer/VSeparator3
+@onready var reset_button: Button = $standing_counter_container/HBoxContainer/reset_button
+@onready var check_button: CheckButton = $standing_counter_container/HBoxContainer/CheckButton
+@onready var shortcuts_panel: PanelContainer = $shortcuts_panel
+@onready var v_box_container: VBoxContainer = $shortcuts_panel/VBoxContainer
+@onready var title: Label = $shortcuts_panel/VBoxContainer/title
+@onready var h_separator: HSeparator = $shortcuts_panel/VBoxContainer/HSeparator
 
-@onready var date_label: Label = $date_label
 
+
+
+
+@onready var shortcut_button_7: Button = $shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_7
+@onready var shortcut_button_6: Button = $shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_6
+@onready var shortcut_button_5: Button = $shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_5
+@onready var shortcut_button_1: Button = $shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_1
+@onready var shortcut_button_4: Button = $shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_4
+@onready var shortcut_button_3: Button = $shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_3
+@onready var shortcut_button_2: Button = $shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_2
+
+
+
+
+
+
+
+
+
+@onready var other_panel: PanelContainer = $other_panel
+
+
+@onready var exit_button: Button = $exit_button
+@onready var settings_button: Button = $settings_button
+@onready var update_timer: Timer = $update_timer
 @onready var incremental_timer: Timer = $incremental_timer
 
-@onready var money_timer: Label = $incremental_timer/money_timer
+
+
+
+
+
+@onready var processor_name: Label = $other_panel/HBoxContainer/processor_name
+@onready var processor_cores: Label = $other_panel/HBoxContainer/processor_cores
+
+
+
+
+@onready var time_label: Label = $PanelContainer/MarginContainer/VBoxContainer/time_label
+@onready var date_label: Label = $PanelContainer/MarginContainer/VBoxContainer/date_label
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#@onready var time_label: Label = $PanelContainer/time_label
+#
+#
+#@onready var standing_counter_text: Label = $standing_counter_container/HBoxContainer/standing_counter_text
+#@onready var standing_counter_button: CheckButton = $standing_counter_container/HBoxContainer/standing_counter_button
+#
+## memory usage
+#@onready var physical_mem: Label = $PanelContainer2/VBoxContainer/physical_mem
+#@onready var free_mem: Label = $PanelContainer2/VBoxContainer/free_mem
+#@onready var available_mem: Label = $PanelContainer2/VBoxContainer/available_mem
+#@onready var stack_meme: Label = $PanelContainer2/VBoxContainer/stack_meme
+#
+#
+#@onready var processor_name: Label = $HBoxContainer/processor_name
+#@onready var processor_cores: Label = $HBoxContainer/processor_cores
+#
+#@onready var current_task: Label = $curent_task_container/current_task
+#
+#@onready var date_label: Label = $date_label
+#
+#@onready var incremental_timer: Timer = $incremental_timer
+#
+#@onready var money_timer: Label = $incremental_timer/money_timer
 
 
 # save system 
@@ -49,7 +142,7 @@ var standing : bool = false
 
 func _ready() -> void:
 	OS.alert("USE WINDOWS KEY + LEFT or RIGHT TO MOVE WINDOW","README")
-	pass 
+	get_gpu_info()
 
 
 
@@ -63,7 +156,7 @@ func _process(delta: float) -> void:
 
 	current_task.text = print_schedule(Time.get_datetime_dict_from_system(false).hour)
 	update_time_date()
-	money_timer.text = str(game_data.money)
+	
 
 	
 # --------------------------------
@@ -74,8 +167,22 @@ func test_function():
 	#OS.get_granted_permissions() -> []
 	#OS.get_distribution_name() -> "Windows"
 	
-	#printerr()
+	#printerr(OS.get_video_adapter_driver_info())
 	pass
+
+
+
+
+func get_gpu_info():
+	var rendering_device = RenderingServer.get_rendering_device()
+	var vendor = rendering_device.get_device_vendor_name()
+	var version = rendering_device.get_device_name()
+
+	print("GPU Vendor: ", vendor)
+	print("GPU Name: ", version)
+
+
+
 
 # --------------------------------
 
@@ -105,10 +212,10 @@ func update_memory_labels(): # percentage_full = (curreent_amount/max_amount) * 
 	processor_name.text = OS.get_processor_name()
 	processor_cores.text = str(OS.get_processor_count()) + "Threads"
 
-	physical_mem.text = "Physical: "+str(OS.get_memory_info().physical)
-	free_mem.text = "Free: "+str(OS.get_memory_info().free)
-	available_mem.text = "Available: "+str(OS.get_memory_info().available)
-	stack_meme.text = "Stack: "+str(OS.get_memory_info().stack)
+	#physical_mem.text = "Physical: "+str(OS.get_memory_info().physical)
+	#free_mem.text = "Free: "+str(OS.get_memory_info().free)
+	#available_mem.text = "Available: "+str(OS.get_memory_info().available)
+	#stack_meme.text = "Stack: "+str(OS.get_memory_info().stack)
 	
 
 
@@ -172,37 +279,8 @@ func _on_update_timer_timeout() -> void:
 
 
 
-func data_save():
-	pass
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-func data_load():
-	pass
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 # ------
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
@@ -262,9 +340,24 @@ func print_schedule(_time): # tie to a timer of 60 seconds
 
 
 func _on_settings_button_pressed() -> void: # TODO : SETTINGS PAGE OPEN?
-	pass 
+	pass
 
 
-func _on_incremental_timer_timeout() -> void: # INCREMENTAL SYSTEM , MONEY  ++ 
-	game_data.money +=1
-	data_save()
+func _on_shortcut_button_7_pressed() -> void: # amazon
+	OS.shell_open("https://www.amazon.com/")
+
+
+func _on_shortcut_button_6_pressed() -> void:
+	OS.shell_open("https://chatgpt.com/")
+
+
+func _on_shortcut_button_5_pressed() -> void:
+	OS.shell_open("https://www.instagram.com/")
+
+
+func _on_shortcut_button_4_pressed() -> void:
+	OS.shell_open("https://www.reddit.com/")
+
+
+func _on_shortcut_button_3_pressed() -> void:
+	OS.shell_open("https://open.spotify.com/")
