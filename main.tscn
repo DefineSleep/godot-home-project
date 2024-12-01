@@ -1,13 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://noexklswb0ye"]
+[gd_scene load_steps=13 format=3 uid="uid://noexklswb0ye"]
 
-[ext_resource type="Theme" uid="uid://c4guut8daundx" path="res://theme_1.tres" id="1_0hxo5"]
 [ext_resource type="Script" path="res://main.gd" id="1_36i56"]
+[ext_resource type="Theme" uid="uid://ghasxkjlcx6f" path="res://main_theme.tres" id="1_bw211"]
+[ext_resource type="Theme" uid="uid://jxgq6c1218vb" path="res://invisible_panel.tres" id="3_h2u0p"]
 [ext_resource type="Texture2D" uid="uid://dvo572mirc85h" path="res://assets/btn4-hovered.png" id="4_0fl8n"]
 [ext_resource type="Script" path="res://panel_container.gd" id="4_npi78"]
 [ext_resource type="Script" path="res://curent_task_container.gd" id="5_rlnkj"]
 [ext_resource type="Script" path="res://standing_counter_container.gd" id="6_gqklx"]
 [ext_resource type="Script" path="res://shortcuts_panel.gd" id="7_hj0yl"]
 [ext_resource type="Script" path="res://other_panel.gd" id="8_5dj38"]
+[ext_resource type="Texture2D" uid="uid://cvbn2a65pevrn" path="res://reload.png" id="8_fjp6t"]
 [ext_resource type="Texture2D" uid="uid://bs58cerk8dixo" path="res://assets/missions menu (frame-up).png" id="9_o0lls"]
 [ext_resource type="Texture2D" uid="uid://wcyqnwy21rhv" path="res://assets/missions menu (frame-down).png" id="10_m534g"]
 
@@ -16,24 +18,46 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 8.0
-offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_0hxo5")
+theme = ExtResource("1_bw211")
 script = ExtResource("1_36i56")
+
+[node name="time_panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.316667
+anchor_right = 0.705375
+anchor_bottom = 0.105444
+offset_right = -0.320004
+offset_bottom = 1.12
+theme = ExtResource("3_h2u0p")
+metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="time_panel"]
+layout_mode = 2
+region_rect = Rect2(160, 32, 264, 80)
+
+[node name="time_label" type="Label" parent="time_panel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 75
+text = "TIME "
+horizontal_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.328125
-anchor_top = 0.192593
-anchor_right = 0.59741
-anchor_bottom = 0.377681
-offset_left = 144.0
-offset_right = 126.974
+anchor_left = 0.448833
+anchor_top = 0.193
+anchor_right = 0.617646
+anchor_bottom = 0.285089
+offset_left = 0.239929
+offset_top = -0.440002
+offset_right = -0.880127
 offset_bottom = 0.104004
-pivot_offset = Vector2(250, 0)
+pivot_offset = Vector2(161, 0)
 script = ExtResource("4_npi78")
 metadata/_edit_use_anchors_ = true
 
@@ -44,18 +68,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = -10
-
-[node name="time_label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-text = "TIME "
-horizontal_alignment = 1
-
-[node name="date_label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="date_label" type="Label" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "TEST DATE"
@@ -119,41 +132,35 @@ patch_margin_top = 50
 patch_margin_right = 50
 patch_margin_bottom = 50
 
-[node name="HBoxContainer" type="HBoxContainer" parent="standing_counter_container"]
+[node name="MarginContainer" type="MarginContainer" parent="standing_counter_container"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="standing_counter_container/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="standing_counter_container/HBoxContainer"]
+[node name="Label" type="Label" parent="standing_counter_container/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 text = "Timer"
 
-[node name="VSeparator" type="VSeparator" parent="standing_counter_container/HBoxContainer"]
-layout_mode = 2
-
-[node name="standing_counter_text" type="Label" parent="standing_counter_container/HBoxContainer"]
+[node name="standing_counter_text" type="Label" parent="standing_counter_container/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 text = "00:00:00"
 
-[node name="VSeparator2" type="VSeparator" parent="standing_counter_container/HBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="standing_counter_container/MarginContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_bw211")
 
-[node name="standing_counter_button" type="CheckButton" parent="standing_counter_container/HBoxContainer"]
+[node name="reset_button" type="Button" parent="standing_counter_container/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 4
 size_flags_vertical = 4
-
-[node name="VSeparator3" type="VSeparator" parent="standing_counter_container/HBoxContainer"]
-layout_mode = 2
-
-[node name="reset_button" type="Button" parent="standing_counter_container/HBoxContainer"]
-layout_mode = 2
-text = "RESET"
-
-[node name="CheckButton" type="CheckButton" parent="standing_counter_container/HBoxContainer"]
-layout_mode = 2
-text = "LOW PROCESSOR USAGE MODE"
-metadata/_edit_use_anchors_ = true
+icon = ExtResource("8_fjp6t")
 
 [node name="shortcuts_panel" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -225,13 +232,12 @@ size_flags_vertical = 4
 text = "Youtube"
 
 [node name="other_panel" type="PanelContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.683333
-anchor_top = 0.272222
-anchor_right = 0.944958
-anchor_bottom = 0.355519
+anchor_left = 0.359375
+anchor_top = 0.892593
+anchor_right = 0.666312
+anchor_bottom = 0.977741
 offset_right = -0.320004
 offset_bottom = 0.0400009
 script = ExtResource("8_5dj38")
@@ -240,19 +246,16 @@ metadata/_edit_use_anchors_ = true
 [node name="VBoxContainer" type="VBoxContainer" parent="other_panel"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="other_panel"]
+[node name="gpu_info" type="Label" parent="other_panel/VBoxContainer"]
 layout_mode = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="processor_name" type="Label" parent="other_panel/HBoxContainer"]
+[node name="processor_name" type="Label" parent="other_panel/VBoxContainer"]
 layout_mode = 2
 text = "TEST NAME"
 metadata/_edit_use_anchors_ = true
 
-[node name="processor_cores" type="Label" parent="other_panel/HBoxContainer"]
+[node name="ram_total" type="Label" parent="other_panel/VBoxContainer"]
 layout_mode = 2
-text = "TEST CORES"
-metadata/_edit_use_anchors_ = true
 
 [node name="exit_button" type="Button" parent="."]
 layout_mode = 1
@@ -278,10 +281,6 @@ offset_bottom = 8.0
 text = "Settings"
 metadata/_edit_use_anchors_ = true
 
-[node name="update_timer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
-
 [node name="MissionsMenu(frame-up)" type="Sprite2D" parent="."]
 position = Vector2(960, 1028)
 texture = ExtResource("9_o0lls")
@@ -290,9 +289,8 @@ texture = ExtResource("9_o0lls")
 position = Vector2(960, 48)
 texture = ExtResource("10_m534g")
 
-[connection signal="toggled" from="standing_counter_container/HBoxContainer/standing_counter_button" to="." method="_on_standing_counter_button_toggled"]
-[connection signal="pressed" from="standing_counter_container/HBoxContainer/reset_button" to="." method="_on_reset_button_pressed"]
-[connection signal="toggled" from="standing_counter_container/HBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="standing_counter_container/MarginContainer/HBoxContainer/CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="standing_counter_container/MarginContainer/HBoxContainer/reset_button" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_7" to="." method="_on_shortcut_button_7_pressed"]
 [connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_6" to="." method="_on_shortcut_button_6_pressed"]
 [connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_5" to="." method="_on_shortcut_button_5_pressed"]
@@ -302,4 +300,3 @@ texture = ExtResource("10_m534g")
 [connection signal="pressed" from="shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_2" to="." method="_on_shortcut_button_2_pressed"]
 [connection signal="pressed" from="exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="settings_button" to="." method="_on_settings_button_pressed"]
-[connection signal="timeout" from="update_timer" to="." method="_on_update_timer_timeout"]

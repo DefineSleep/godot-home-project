@@ -11,12 +11,8 @@ extends Control
 @onready var h_box_container: HBoxContainer = $standing_counter_container/HBoxContainer
 @onready var label: Label = $standing_counter_container/HBoxContainer/Label
 @onready var v_separator: VSeparator = $standing_counter_container/HBoxContainer/VSeparator
-@onready var standing_counter_text: Label = $standing_counter_container/HBoxContainer/standing_counter_text
 @onready var v_separator_2: VSeparator = $standing_counter_container/HBoxContainer/VSeparator2
-@onready var standing_counter_button: CheckButton = $standing_counter_container/HBoxContainer/standing_counter_button
 @onready var v_separator_3: VSeparator = $standing_counter_container/HBoxContainer/VSeparator3
-@onready var reset_button: Button = $standing_counter_container/HBoxContainer/reset_button
-@onready var check_button: CheckButton = $standing_counter_container/HBoxContainer/CheckButton
 @onready var shortcuts_panel: PanelContainer = $shortcuts_panel
 @onready var v_box_container: VBoxContainer = $shortcuts_panel/VBoxContainer
 @onready var title: Label = $shortcuts_panel/VBoxContainer/title
@@ -35,13 +31,6 @@ extends Control
 @onready var shortcut_button_2: Button = $shortcuts_panel/MarginContainer/VBoxContainer/shortcut_button_2
 
 
-
-
-
-
-
-
-
 @onready var other_panel: PanelContainer = $other_panel
 
 
@@ -51,18 +40,8 @@ extends Control
 @onready var incremental_timer: Timer = $incremental_timer
 
 
-
-
-
-
-@onready var processor_name: Label = $other_panel/HBoxContainer/processor_name
-@onready var processor_cores: Label = $other_panel/HBoxContainer/processor_cores
-
-
-
-
-@onready var time_label: Label = $PanelContainer/MarginContainer/VBoxContainer/time_label
-@onready var date_label: Label = $PanelContainer/MarginContainer/VBoxContainer/date_label
+@onready var date_label: Label = $PanelContainer/MarginContainer/date_label
+@onready var time_label: Label = $time_panel/time_label
 
 
 
@@ -70,14 +49,18 @@ extends Control
 
 
 
+@onready var standing_counter_text: Label = $standing_counter_container/MarginContainer/HBoxContainer/standing_counter_text
+@onready var standing_counter_button: CheckButton = $standing_counter_container/MarginContainer/HBoxContainer/standing_counter_button
+@onready var reset_button: Button = $standing_counter_container/MarginContainer/HBoxContainer/reset_button
+@onready var check_button: CheckButton = $standing_counter_container/MarginContainer/HBoxContainer/CheckButton
 
 
 
 
 
-
-
-
+@onready var gpu_info: Label = $other_panel/VBoxContainer/gpu_info
+@onready var processor_name: Label = $other_panel/VBoxContainer/processor_name
+@onready var ram_total: Label = $other_panel/VBoxContainer/ram_total
 
 
 
@@ -141,8 +124,10 @@ var standing : bool = false
 # --------------------------------
 
 func _ready() -> void:
-	OS.alert("USE WINDOWS KEY + LEFT or RIGHT TO MOVE WINDOW","README")
-	get_gpu_info()
+	OS.alert("USE WINDOWS KEY + LEFT or RIGHT TO MOVE WINDOW , CTRL + ALT + CLICK AND HOLD TO MOVE WINDOWS","README")
+	gpu_info.text = get_gpu_info()
+	update_cpu_labels()
+
 
 
 
@@ -167,10 +152,10 @@ func test_function():
 	#OS.get_granted_permissions() -> []
 	#OS.get_distribution_name() -> "Windows"
 	
-	#printerr(OS.get_video_adapter_driver_info())
+	printerr(int(OS.get_memory_info().physical)/ (1024 ** 3))
+	
 	pass
-
-
+	
 
 
 func get_gpu_info():
@@ -178,8 +163,9 @@ func get_gpu_info():
 	var vendor = rendering_device.get_device_vendor_name()
 	var version = rendering_device.get_device_name()
 
-	print("GPU Vendor: ", vendor)
-	print("GPU Name: ", version)
+	return str(version)
+	#print("GPU Vendor: ", vendor)
+	#print("GPU Name: ", version)
 
 
 
@@ -208,15 +194,9 @@ func weekday_setter(_weekday):
 		7: return "Sunday"
 		_: return "error"
 
-func update_memory_labels(): # percentage_full = (curreent_amount/max_amount) * 100 
+func update_cpu_labels(): # percentage_full = (curreent_amount/max_amount) * 100 
 	processor_name.text = OS.get_processor_name()
-	processor_cores.text = str(OS.get_processor_count()) + "Threads"
-
-	#physical_mem.text = "Physical: "+str(OS.get_memory_info().physical)
-	#free_mem.text = "Free: "+str(OS.get_memory_info().free)
-	#available_mem.text = "Available: "+str(OS.get_memory_info().available)
-	#stack_meme.text = "Stack: "+str(OS.get_memory_info().stack)
-	
+	#processor_cores.text = str(OS.get_processor_count()) + "Threads"
 
 
 
@@ -237,13 +217,17 @@ func standing_counter_code():
 		
 
 
-
-func _on_standing_counter_button_toggled(toggled_on: bool) -> void:
+func _on_check_box_toggled(toggled_on: bool) -> void:
 	if toggled_on == true :
 		standing = true
 		
 	if toggled_on == false :
 		standing = false 
+
+
+
+
+
 
 func current_task_logic(time):
 	pass
@@ -262,6 +246,8 @@ func _on_exit_button_pressed() -> void:
 	get_tree().quit()
 
 
+
+
 func _on_reset_button_pressed() -> void:
 	miliseconds = 0
 	seconds = 0
@@ -269,9 +255,8 @@ func _on_reset_button_pressed() -> void:
 	hours = 0
 	
 
-func _on_update_timer_timeout() -> void:
-	update_memory_labels()
-	pass
+
+
 	
 # ------
 # loading and saving 
@@ -283,7 +268,9 @@ func _on_update_timer_timeout() -> void:
 
 # ------
 
-func _on_check_button_toggled(toggled_on: bool) -> void:
+
+
+func _on_check_box_2_toggled(toggled_on: bool) -> void:
 	if toggled_on == true : 
 		OS.low_processor_usage_mode = true
 	if toggled_on == false : 

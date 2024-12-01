@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://ghasxkjlcx6f"]
+
+[ext_resource type="Texture2D" uid="uid://c6l0ecamru7p2" path="res://assets/checker.png" id="1_2p4wn"]
+[ext_resource type="Texture2D" uid="uid://cv6b1qcy2gavi" path="res://assets/checker (unchecked).png" id="2_45ivo"]
+
+[resource]
+CheckBox/icons/checked = ExtResource("1_2p4wn")
+CheckBox/icons/radio_checked = null
+CheckBox/icons/radio_checked_disabled = null
+CheckBox/icons/radio_unchecked = null
+CheckBox/icons/radio_unchecked_disabled = null
+CheckBox/icons/unchecked = ExtResource("2_45ivo")
+CheckBox/icons/unchecked_disabled = null
